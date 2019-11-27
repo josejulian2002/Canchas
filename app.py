@@ -21,9 +21,10 @@ from Controllers.preciocancha import PrecioCanchaController
 from Controllers.reserva import ReservaController
 from Controllers.valoracion import ValoracionesController
 
+from flask_cors import CORS
 app=Flask(__name__)
-
-app.config['SQLALCHEMY_DATABASE_URI']="mysql://root:root@localhost/canchas"
+CORS(app)
+app.config['SQLALCHEMY_DATABASE_URI']="mysql://1ZrncgxcL1:fCqPUkmwKL@remotemysql.com/1ZrncgxcL1"
 
 api=Api(app)
 

@@ -38,13 +38,30 @@ class ValoracionController (Resource):
 
 class ValoracionesController(Resource):
     def get(self,id_local):
-        sentencia=LocalModel.query.filter_by(loc_id=id_local).first()
-        valoracion=[]
-        for canchita in sentencia.canchitas:
-            for precio in canchita.precio:
-                for reserva in precio.reserva:
-                    for valoraciones in reserva.valoracion:
-                        valoracion.append(valoraciones.retornar())
-                    print(reserva.valoracion)
-        return valoracion
+        sentencia = LocalModel.query.filter_by(loc_id=id_local).first()
+        resultado = []
+        promedio = 0
+        for cancha in sentencia.canchitas:
+            for preciocancha in cancha.preciocancha:
+                for reserva in preciocancha.reserva:
+                    for valoracion in reserva.valoracion:
+                        promedio += valoracion.val_estrellas
+                        resultado.append({
+                            'comentario':valoracion.val_comentario,
+                            'estrellas':valoracion.val_estrellas
+                            })
+        return {
+            'comentarios':resultado,
+            'promedio':promedio/len(resultado)
+        }
+    # def get(self,id_local):
+    #     sentencia=LocalModel.query.filter_by(loc_id=id_local).first()
+    #     valoracion=[]
+    #     for canchita in sentencia.canchitas:
+    #         for precio in canchita.precio:
+    #             for reserva in precio.reserva:
+    #                 for valoraciones in reserva.valoracion:
+    #                     valoracion.append(valoraciones.retornar())
+    #                 print(reserva.valoracion)
+    #     return valoracion
 
