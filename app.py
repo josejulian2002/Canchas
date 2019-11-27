@@ -21,6 +21,7 @@ from Controllers.preciocancha import PrecioCanchaController
 from Controllers.reserva import ReservaController
 from Controllers.valoracion import ValoracionesController
 from flask_jwt import JWT
+from seguridad import autenticacion, identificador
 
 from flask_cors import CORS
 app=Flask(__name__)
