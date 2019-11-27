@@ -20,11 +20,18 @@ from Controllers.preciocancha import PrecioCanchaController
 # from Models.reserva import ReservaModel
 from Controllers.reserva import ReservaController
 from Controllers.valoracion import ValoracionesController
+from flask_jwt import JWT
 
 from flask_cors import CORS
 app=Flask(__name__)
 CORS(app)
 app.config['SQLALCHEMY_DATABASE_URI']="mysql://1ZrncgxcL1:fCqPUkmwKL@remotemysql.com/1ZrncgxcL1"
+app.config['SECRET_KEY'] ='clave_secreta'
+app.config['JWT_AUTH_URL_RULE']='/usuario/login'
+from datetime import timedelta
+app.config['JWT_EXPIRATION_DELTA']=timedelta(hours=1)
+
+jsonwebtoken = JWT(app,autenticacion,identificador)
 
 api=Api(app)
 
@@ -54,7 +61,7 @@ api.add_resource(CanchitaController,'/canchita/buscar/<int:id>','/canchita/agreg
 api.add_resource(TipoController,'/tipo/buscar/<string:nombre>','/tipo/agregar')
 api.add_resource(TiposController,'/tipos/traer')
 
-api.add_resource(UsuarioControllers,'/usuario/buscar/<string:nombre>','/usuario/agregar')
+api.add_resource(UsuarioControllers,'/usuario/buscar/<string:nombre>','/usuario/agregar','/usuario/login')
 
 api.add_resource(ValoracionesController,'/valoraciones/<int:id_local>')
 
