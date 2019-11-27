@@ -1,4 +1,4 @@
-from models.usuario import UsuarioModel
+from Models.usuario import UsuarioModel
 import bcrypt
 class Usuario(object):
     def __init__(self, id, username):
